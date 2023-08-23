@@ -9,14 +9,15 @@ const activeChain = "mumbai";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider 
+    <ThirdwebProvider
+      clientId="dca20a5be1ee008e94f1063a94dd7dbb"
       activeChain={activeChain}
       sdkOptions={{
         gasless: {
           openzeppelin: {
-            relayerUrl: process.env.NEXT_PUBLIC_RELAYER_URL
-          }
-        }
+            relayerUrl: process.env.NEXT_PUBLIC_RELAYER_URL,
+          },
+        },
       }}
     >
       <Component {...pageProps} />

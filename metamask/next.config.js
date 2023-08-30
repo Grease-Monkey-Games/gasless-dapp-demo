@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const { DEFENDER_URL, SMART_WALLET_URL } = process.env;
+const { DEFENDER_URL, SMART_WALLET_URL, SEQUENCE_URL } = process.env;
 
 const nextConfig = {
   async rewrites() {
@@ -23,6 +23,14 @@ const nextConfig = {
       {
         source: "/smart-wallet/:path*",
         destination: `${SMART_WALLET_URL}/smart-wallet/:path*`,
+      },
+      {
+        source: "/sequence",
+        destination: `${SEQUENCE_URL}/sequence`,
+      },
+      {
+        source: "/sequence/:path*",
+        destination: `${SEQUENCE_URL}/sequence/:path*`,
       },
     ];
   },

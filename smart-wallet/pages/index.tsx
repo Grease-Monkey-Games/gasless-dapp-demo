@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>Smart Wallet Method by Thirdweb</h1>
+        <h1 className={styles.title}>Thirdweb Wallet</h1>
         <br />
         <ConnectWallet />
         <br />

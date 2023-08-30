@@ -109,18 +109,18 @@ export default function Home() {
         <div className="flex items-center justify-center screen">
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} style={{ backgroundColor: "black" }}>
-                <Item style={{ backgroundColor: "black" }}>
+              <Grid item xs={12} style={{ backgroundColor: "#0f1318" }}>
+                <Item style={{ backgroundColor: "#0f1318" }}>
                   <h1
                     className="title"
                     style={{ color: "white", fontWeight: "bold" }}
                   >
-                    Smart Wallet Method by Sequence
+                    Sequence Wallet
                   </h1>
                 </Item>
               </Grid>
-              <Grid item xs={12} style={{ backgroundColor: "black" }}>
-                <Item style={{ backgroundColor: "black" }}>
+              <Grid item xs={12} style={{ backgroundColor: "#0f1318" }}>
+                <Item style={{ backgroundColor: "#0f1318" }}>
                   <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -137,18 +137,18 @@ export default function Home() {
         <div className="flex items-center justify-center screen">
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} style={{ backgroundColor: "black" }}>
-                <Item style={{ backgroundColor: "black" }}>
+              <Grid item xs={12} style={{ backgroundColor: "#0f1318" }}>
+                <Item style={{ backgroundColor: "#0f1318" }}>
                   <h1
                     className="title"
                     style={{ color: "white", fontWeight: "bold" }}
                   >
-                    Smart Wallet Method by Sequence
+                    Sequence Wallet
                   </h1>
                 </Item>
               </Grid>
-              <Grid item xs={12} style={{ backgroundColor: "black" }}>
-                <Item style={{ backgroundColor: "black" }}>
+              <Grid item xs={12} style={{ backgroundColor: "#0f1318" }}>
+                <Item style={{ backgroundColor: "#0f1318" }}>
                   <button
                     type="submit"
                     onClick={openWallet}
@@ -158,8 +158,8 @@ export default function Home() {
                   </button>
                 </Item>
               </Grid>
-              <Grid item xs={12} style={{ backgroundColor: "black" }}>
-                <Item style={{ backgroundColor: "black" }}>
+              <Grid item xs={12} style={{ backgroundColor: "#0f1318" }}>
+                <Item style={{ backgroundColor: "#0f1318" }}>
                   <button
                     type="submit"
                     onClick={disconnectWallet}
@@ -169,8 +169,8 @@ export default function Home() {
                   </button>
                 </Item>
               </Grid>
-              <Grid item xs={12} style={{ backgroundColor: "black" }}>
-                <Item style={{ backgroundColor: "black" }}>
+              <Grid item xs={12} style={{ backgroundColor: "#0f1318" }}>
+                <Item style={{ backgroundColor: "#0f1318" }}>
                   <button
                     style={{ backgroundColor: "red" }}
                     type="submit"

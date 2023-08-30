@@ -7,9 +7,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Smart Wallet Method
-        </h1>
+        <h1 className={styles.title}>Smart Wallet Method by Thirdweb</h1>
         <br />
         <ConnectWallet />
         <br />
@@ -17,7 +15,9 @@ const Home: NextPage = () => {
           contractAddress={NFT_ADDRESS}
           action={(contract) => contract.erc721.claim(1)}
           onSuccess={() => alert("Rewards Claimed!")}
-        >Claim Reward</Web3Button>
+        >
+          Claim Reward
+        </Web3Button>
       </main>
     </div>
   );

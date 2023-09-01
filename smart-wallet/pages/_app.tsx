@@ -22,11 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         smartWallet({
           factoryAddress: FACTORY_ADDRESS,
           gasless: true,
-          personalWallets: [
-            metamaskWallet(),
-            coinbaseWallet(),
-            localWallet({ persist: true }),
-          ],
+          personalWallets: [localWallet({ persist: true })],
         }),
       ]}
     >

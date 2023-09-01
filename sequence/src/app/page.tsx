@@ -8,6 +8,7 @@ import { sequence } from "0xsequence";
 import { ConnectOptions } from "0xsequence/dist/declarations/src/provider";
 import { ethers } from "ethers";
 import RewardContractABI from "../contracts/Reward.json";
+import Swal from "sweetalert2";
 
 const RewardContractAddress = "0x369A4d9Ee1286E23e78D51957a252b9eBb008e5d";
 
@@ -55,15 +56,29 @@ export default function Home() {
         )
           .then((response: any) => {
             console.log("Reward Claimed!", response);
+            const transaction =
+              "https://mumbai.polygonscan.com/tx/" + response.hash;
+            Swal.fire(
+              "Rewards Claimed!",
+              `Transaction Hash: <a style="text-decoration: underline" target="_blank" rel="noopener noreferrer" href=${transaction}><b>${response.hash}</b></a>`,
+              "success"
+            );
           })
           .catch((err: any) => {
             console.log("Error occured while claiming reward", err);
+            Swal.fire("Rewards Not Claimed!", "Error claiming reward", "error");
           });
       } else {
         console.log("Wallet object doesn't exist!");
+        Swal.fire(
+          "Rewards Not Claimed!",
+          "Wallet object does not exist",
+          "error"
+        );
       }
     } catch (error) {
       console.log("Error claiming reward!", error);
+      Swal.fire("Rewards Not Claimed!", "Error claiming reward", "error");
     }
   };
 

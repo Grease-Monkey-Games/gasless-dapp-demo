@@ -19,6 +19,10 @@ const Thirdweb: NextPage = () => {
               <h2>Local Authentication &rarr;</h2>
               <p>Claim your rewards using an extra password.</p>
             </Link>
+            <Link href="/smart-wallet/paper-wallet" className={styles.card}>
+              <h2>Email Wallet &rarr;</h2>
+              <p>Claim your rewards using your Email.</p>
+            </Link>
             <Link href="/smart-wallet/tm-account" className={styles.card}>
               <h2>TM Account &rarr;</h2>
               <p>Claim your rewards using your TM Account Username.</p>

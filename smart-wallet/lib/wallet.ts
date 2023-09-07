@@ -1,10 +1,11 @@
-import { LocalWallet, SmartWallet } from "@thirdweb-dev/wallets";
+import { LocalWallet, SmartWallet, PaperWallet } from "@thirdweb-dev/wallets";
 import {
-  ACCOUNT_ABI,
   NEW_ACCOUNT_ABI,
   THIRDWEB_API_KEY,
+  THIRDWEB_SECRET_KEY,
   chain,
   factoryAddress,
+  accountFactoryAddress,
 } from "./constants";
 import {
   ThirdwebSDK,
@@ -13,6 +14,7 @@ import {
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import axios from "axios";
+import { AuthLoginReturnType } from "@paperxyz/embedded-wallet-service-sdk";
 
 export function createSmartWallet(): SmartWallet {
   const smartWallet = new SmartWallet({
@@ -20,6 +22,18 @@ export function createSmartWallet(): SmartWallet {
     factoryAddress: factoryAddress,
     gasless: true,
     clientId: THIRDWEB_API_KEY || "",
+    secretKey: THIRDWEB_SECRET_KEY || "",
+  });
+  return smartWallet;
+}
+
+export function createSmartWalletWithEmail(): SmartWallet {
+  const smartWallet = new SmartWallet({
+    chain: chain,
+    factoryAddress: accountFactoryAddress,
+    gasless: true,
+    clientId: THIRDWEB_API_KEY || "",
+    secretKey: THIRDWEB_SECRET_KEY || "",
   });
   return smartWallet;
 }
@@ -124,4 +138,25 @@ export async function connectToSmartWallet(
   }
 
   return smartWallet;
+}
+
+export async function connectToSmartWalletWithPaper(
+  authLogin: AuthLoginReturnType
+): Promise<SmartWallet | null> {
+  try {
+    const paperWallet = new PaperWallet({
+      chain: chain, //  chain to connect to
+      paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027", // Paper SDK client ID
+    });
+    paperWallet.connect();
+    console.log("paperWallet: ", paperWallet);
+
+    const smartWallet = createSmartWalletWithEmail();
+    await smartWallet.connect({
+      personalWallet: paperWallet,
+    });
+    return smartWallet;
+  } catch (e) {
+    return null;
+  }
 }

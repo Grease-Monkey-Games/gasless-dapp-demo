@@ -1,9 +1,7 @@
 import type { AppProps } from "next/app";
 import {
   ThirdwebProvider,
-  coinbaseWallet,
   localWallet,
-  metamaskWallet,
   smartWallet,
 } from "@thirdweb-dev/react";
 import "../styles/globals.css";

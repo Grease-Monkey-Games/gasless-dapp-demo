@@ -1,9 +1,6 @@
 import { LocalWallet, SmartWallet, PaperWallet } from "@thirdweb-dev/wallets";
 import {
   NEW_ACCOUNT_ABI,
-  THIRDWEB_API_KEY,
-  THIRDWEB_SECRET_KEY,
-  chain,
   factoryAddress,
   accountFactoryAddress,
 } from "./constants";
@@ -15,25 +12,28 @@ import {
 import { ethers } from "ethers";
 import axios from "axios";
 import { AuthLoginReturnType } from "@paperxyz/embedded-wallet-service-sdk";
+import { Mumbai } from "@thirdweb-dev/chains";
 
 export function createSmartWallet(): SmartWallet {
   const smartWallet = new SmartWallet({
-    chain: chain,
+    chain: "mumbai",
     factoryAddress: factoryAddress,
     gasless: true,
-    clientId: THIRDWEB_API_KEY || "",
-    secretKey: THIRDWEB_SECRET_KEY || "",
+    clientId: "2d67c736af17b955a36483b753a95192",
+    //secretKey:
+    //  "MU492YZNc7bY4Eb8rHMzMDsOONwDfF4-B96o7hd1e3IvbI-ah5oKo64UvxK78uhAzpWs7FhCSbuplBSn7tRKYQ",
   });
   return smartWallet;
 }
 
 export function createSmartWalletWithEmail(): SmartWallet {
   const smartWallet = new SmartWallet({
-    chain: chain,
+    chain: "mumbai",
     factoryAddress: accountFactoryAddress,
     gasless: true,
-    clientId: THIRDWEB_API_KEY || "",
-    secretKey: THIRDWEB_SECRET_KEY || "",
+    clientId: "2d67c736af17b955a36483b753a95192",
+    //secretKey:
+    //  "MU492YZNc7bY4Eb8rHMzMDsOONwDfF4-B96o7hd1e3IvbI-ah5oKo64UvxK78uhAzpWs7FhCSbuplBSn7tRKYQ",
   });
   return smartWallet;
 }
@@ -55,8 +55,8 @@ export async function connectToSmartWallet(
   statusCallback?: (status: string) => void
 ): Promise<SmartWallet> {
   statusCallback?.("Checking username...");
-  const sdk = new ThirdwebSDK(chain, {
-    clientId: THIRDWEB_API_KEY || "",
+  const sdk = new ThirdwebSDK("mumbai", {
+    clientId: "2d67c736af17b955a36483b753a95192",
   });
   const smartWalletAddress = await getWalletAddressForUser(sdk, username);
   const isDeployed = await isContractDeployed(
@@ -145,13 +145,14 @@ export async function connectToSmartWalletWithPaper(
 ): Promise<SmartWallet | null> {
   try {
     const paperWallet = new PaperWallet({
-      chain: chain, //  chain to connect to
+      chain: Mumbai, //  chain to connect to
       paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027", // Paper SDK client ID
     });
     paperWallet.connect();
     console.log("paperWallet: ", paperWallet);
 
     const smartWallet = createSmartWalletWithEmail();
+    console.log("smartWallet: ", smartWallet);
     await smartWallet.connect({
       personalWallet: paperWallet,
     });

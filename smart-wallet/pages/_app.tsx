@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import {
   ThirdwebProvider,
   localWallet,
+  paperWallet,
   smartWallet,
 } from "@thirdweb-dev/react";
 import "../styles/globals.css";

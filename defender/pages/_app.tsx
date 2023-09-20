@@ -10,7 +10,7 @@ const activeChain = "mumbai";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider
-      clientId="dca20a5be1ee008e94f1063a94dd7dbb"
+      clientId="2d67c736af17b955a36483b753a95192"
       activeChain={activeChain}
       sdkOptions={{
         gasless: {

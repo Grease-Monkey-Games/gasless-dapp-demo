@@ -1,21 +1,10 @@
-import { Mumbai } from "@thirdweb-dev/chains";
-
 export const THIRDWEB_API_KEY = "2d67c736af17b955a36483b753a95192";
 export const THIRDWEB_SECRET_KEY =
   "MU492YZNc7bY4Eb8rHMzMDsOONwDfF4-B96o7hd1e3IvbI-ah5oKo64UvxK78uhAzpWs7FhCSbuplBSn7tRKYQ";
 
-export const chain = Mumbai;
-
-const chainInfos = {
-  [Mumbai.chainId]: {
-    factoryAddress: "0x523661Cb7DE917A0605fD85D465E7bE985F099F8", // Username wallet
-    accountFactoryAddress: "0xd880c78698117125cC80E4097d5208912707A0A0", // Email wallet
-  },
-};
-
-export const factoryAddress = chainInfos[chain.chainId].factoryAddress;
+export const factoryAddress = "0x523661Cb7DE917A0605fD85D465E7bE985F099F8";
 export const accountFactoryAddress =
-  chainInfos[chain.chainId].accountFactoryAddress;
+  "0xd880c78698117125cC80E4097d5208912707A0A0";
 
 export const ACCOUNT_ABI = [
   {

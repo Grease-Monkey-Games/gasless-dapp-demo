@@ -24,6 +24,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import {
+  ThirdwebProvider,
+  paperWallet,
+  smartWallet,
+} from "@thirdweb-dev/react";
+import { FACTORY_ADDRESS } from "../const/addresses";
 
 const PaperWalletPage: NextPage = () => {
   const [signer, setSigner] = useState<any>(null);
@@ -233,33 +239,49 @@ const PaperWalletPage: NextPage = () => {
       <Head>
         <title>Paper Wallet Method</title>
       </Head>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <h1 className={styles.title}>Paper Wallet Method</h1>
-          <br />
-          <form>
-            <label>
-              Email:
-              <input
-                style={{ marginLeft: "5px", width: "350px" }}
-                type="email"
-                name="userEmail"
-                onChange={formik.handleChange}
-              />
-            </label>
+      <ThirdwebProvider
+        clientId="dca20a5be1ee008e94f1063a94dd7dbb"
+        activeChain="mumbai"
+        supportedWallets={[
+          smartWallet({
+            factoryAddress: FACTORY_ADDRESS,
+            gasless: true,
+            personalWallets: [
+              paperWallet({
+                paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027",
+              }),
+            ],
+          }),
+        ]}
+      >
+        <div className={styles.container}>
+          <main className={styles.main}>
+            <h1 className={styles.title}>Paper Wallet Method</h1>
             <br />
-            <br />
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              style={{ marginLeft: "140px" }}
-              onClick={(e) => connectWallet(e)}
-            >
-              Connect Wallet
-            </button>
-          </form>
-        </main>
-      </div>
+            <form>
+              <label>
+                Email:
+                <input
+                  style={{ marginLeft: "5px", width: "350px" }}
+                  type="email"
+                  name="userEmail"
+                  onChange={formik.handleChange}
+                />
+              </label>
+              <br />
+              <br />
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                style={{ marginLeft: "140px" }}
+                onClick={(e) => connectWallet(e)}
+              >
+                Connect Wallet
+              </button>
+            </form>
+          </main>
+        </div>
+      </ThirdwebProvider>
     </>
   );
 };

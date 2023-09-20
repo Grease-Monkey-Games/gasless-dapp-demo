@@ -1,6 +1,5 @@
 import { ThirdwebSDKProvider, Web3Button } from "@thirdweb-dev/react";
 import { Signer } from "ethers";
-import { THIRDWEB_API_KEY, chain } from "../lib/constants";
 import { NFT_ADDRESS } from "../const/addresses";
 import Swal from "sweetalert2";
 
@@ -16,8 +15,8 @@ export const Connected = ({
   return (
     <ThirdwebSDKProvider
       signer={signer}
-      activeChain={chain}
-      clientId={THIRDWEB_API_KEY || ""}
+      activeChain="mumbai"
+      clientId="2d67c736af17b955a36483b753a95192"
     >
       <p>
         Connected as <b>{username}</b>

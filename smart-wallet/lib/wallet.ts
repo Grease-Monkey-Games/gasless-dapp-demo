@@ -1,4 +1,4 @@
-import { LocalWallet, SmartWallet, PaperWallet } from "@thirdweb-dev/wallets";
+import { LocalWallet, SmartWallet, PaperWallet, EthersWallet } from "@thirdweb-dev/wallets";
 import {
   NEW_ACCOUNT_ABI,
   factoryAddress,
@@ -141,21 +141,19 @@ export async function connectToSmartWallet(
 }
 
 export async function connectToSmartWalletWithPaper(
-  authLogin: AuthLoginReturnType
+  paperWallet: PaperWallet
 ): Promise<SmartWallet | null> {
   try {
-    const paperWallet = new PaperWallet({
-      chain: Mumbai, //  chain to connect to
-      paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027", // Paper SDK client ID
-    });
-    paperWallet.connect();
+ 
     console.log("paperWallet: ", paperWallet);
 
+    
     const smartWallet = createSmartWalletWithEmail();
     console.log("smartWallet: ", smartWallet);
     await smartWallet.connect({
       personalWallet: paperWallet,
     });
+    console.log("smartWallet connected!!!");
     return smartWallet;
   } catch (e) {
     return null;

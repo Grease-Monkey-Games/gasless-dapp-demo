@@ -28,8 +28,13 @@ import {
   ThirdwebProvider,
   paperWallet,
   smartWallet,
+  useWalletContext
 } from "@thirdweb-dev/react";
 import { FACTORY_ADDRESS } from "../const/addresses";
+
+export const paperConfig = paperWallet({
+  paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027",
+});
 
 const PaperWalletPage: NextPage = () => {
   const [signer, setSigner] = useState<any>(null);
@@ -38,6 +43,7 @@ const PaperWalletPage: NextPage = () => {
   const [sendOtpErrorMessage, setSendOtpErrorMessage] = useState("");
   const [otpCode, setOtpCode] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { createWalletInstance, setConnectedWallet } = useWalletContext();
   const [error, setError] = useState("");
   const [sendEmailOtpResult, setSendEmailOtpResult] = useState<
     | {
@@ -46,6 +52,7 @@ const PaperWalletPage: NextPage = () => {
       }
     | undefined
   >(undefined);
+  
 
   const formik = useFormik({
     initialValues: {
@@ -98,46 +105,54 @@ const PaperWalletPage: NextPage = () => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const sdk = new PaperEmbeddedWalletSdk({
-        clientId: "9a67898a-341a-4e51-9688-197bc7ac9027",
-        chain: "Mumbai",
-      });
-      const result = await sdk.auth.verifyPaperEmailLoginOtp({
+
+      // create instance of paper wallet
+      const paperWallet = createWalletInstance(paperConfig);
+
+      // get paper sdk from paper wallet
+      const sdk =  await paperWallet.getPaperSDK();
+
+      const userObj = {
         email: formik.values.userEmail || "",
         otp: otpCode || "",
-      });
-      console.log("verifyPaperEmailLoginOtp result", result);
+      };
 
-      // Paper Wallet Login is successful => Smart Wallet should be created
-      if (result) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login Successful",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        const user = await sdk.getUser();
-        console.log(user.status);
-        console.log(user);
-        //const userPaperWallet = user.wallet;
-        if (user.status === UserStatus.LOGGED_IN_WALLET_INITIALIZED) {
-          const smartWallet = await connectToSmartWalletWithPaper(result);
-          if (smartWallet !== null) {
-            Swal.fire(
-              "Smart Wallet Created!",
-              `Your address is: <b>${smartWallet.getAddress()}</b>`,
-              "success"
-            );
-          } else {
-            Swal.fire(
-              "Error Creating Smart Wallet!",
-              "Please, try again",
-              "error"
-            );
-          }
+      // connect paper wallet verification happens here and will throw error if issue
+      await paperWallet.connect({ email: userObj.email, otp: userObj.otp });
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Login Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+
+      const user = await sdk.getUser();
+      console.log(user.status);
+      console.log(user);
+      //const userPaperWallet = user.wallet;
+      if (user.status === UserStatus.LOGGED_IN_WALLET_INITIALIZED) {
+
+        // pass paper wallet
+        const smartWallet = await connectToSmartWalletWithPaper(paperWallet);
+        if (smartWallet !== null) {
+          Swal.fire(
+            "Smart Wallet Created!",
+            `Your address is: <b>${smartWallet.getAddress()}</b>`,
+            "success"
+          );
+        } else {
+          Swal.fire(
+            "Error Creating Smart Wallet!",
+            "Please, try again",
+            "error"
+          );
         }
       }
+    
+
     } catch (e) {
       console.error("ERROR verifying otp", e);
       setVerifyOtpErrorMessage(`${(e as any).message}. Please try again`);
@@ -247,9 +262,7 @@ const PaperWalletPage: NextPage = () => {
             factoryAddress: FACTORY_ADDRESS,
             gasless: true,
             personalWallets: [
-              paperWallet({
-                paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027",
-              }),
+              paperConfig,
             ],
           }),
         ]}

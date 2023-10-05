@@ -116,7 +116,7 @@ const PaperWalletPage: NextPage = () => {
         email: formik.values.userEmail || "",
         otp: otpCode || "",
       };
-
+      console.log(userObj.otp);
       // connect paper wallet verification happens here and will throw error if issue
       await paperWallet.connect({ email: userObj.email, otp: userObj.otp });
 
@@ -127,7 +127,6 @@ const PaperWalletPage: NextPage = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-
 
       const user = await sdk.getUser();
       console.log(user.status);
@@ -152,7 +151,6 @@ const PaperWalletPage: NextPage = () => {
         }
       }
     
-
     } catch (e) {
       console.error("ERROR verifying otp", e);
       setVerifyOtpErrorMessage(`${(e as any).message}. Please try again`);

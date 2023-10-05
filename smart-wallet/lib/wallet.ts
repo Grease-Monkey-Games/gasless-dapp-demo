@@ -147,7 +147,6 @@ export async function connectToSmartWalletWithPaper(
  
     console.log("paperWallet: ", paperWallet);
 
-    
     const smartWallet = createSmartWalletWithEmail();
     console.log("smartWallet: ", smartWallet);
     await smartWallet.connect({

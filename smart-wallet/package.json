@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p 5000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
-    "@thirdweb-dev/react": "^3.14.40",
-    "@thirdweb-dev/sdk": "^3.10.59",
+    "@thirdweb-dev/react": "^3.15.0",
+    "@thirdweb-dev/sdk": "^3.10.61",
     "autoprefixer": "^10.4.15",
     "ethers": "^5",
     "formik": "^2.4.3",

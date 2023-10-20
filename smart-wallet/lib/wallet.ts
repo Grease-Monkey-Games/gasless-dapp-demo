@@ -32,8 +32,6 @@ export function createSmartWalletWithEmail(): SmartWallet {
     factoryAddress: accountFactoryAddress,
     gasless: true,
     clientId: "2d67c736af17b955a36483b753a95192",
-    //secretKey:
-    //  "MU492YZNc7bY4Eb8rHMzMDsOONwDfF4-B96o7hd1e3IvbI-ah5oKo64UvxK78uhAzpWs7FhCSbuplBSn7tRKYQ",
   });
   return smartWallet;
 }

@@ -28,9 +28,10 @@ import {
   ThirdwebProvider,
   paperWallet,
   smartWallet,
-  useWalletContext
+  useWalletContext,
 } from "@thirdweb-dev/react";
 import { FACTORY_ADDRESS } from "../const/addresses";
+import { PaperWallet } from "@thirdweb-dev/wallets";
 
 export const paperConfig = paperWallet({
   paperClientId: "9a67898a-341a-4e51-9688-197bc7ac9027",
@@ -52,7 +53,7 @@ const PaperWalletPage: NextPage = () => {
       }
     | undefined
   >(undefined);
-  
+  const [paperWallet, setPaperWallet] = useState<PaperWallet | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -81,10 +82,9 @@ const PaperWalletPage: NextPage = () => {
   const connectWallet = async (event: any) => {
     event.preventDefault();
     if (formik.errors.userEmail === "") {
-      const sdk = new PaperEmbeddedWalletSdk({
-        clientId: "9a67898a-341a-4e51-9688-197bc7ac9027",
-        chain: "Mumbai",
-      });
+      const _wallet = createWalletInstance(paperConfig);
+      setPaperWallet(_wallet);
+      const sdk = await _wallet.getPaperSDK();      
       const result = await sdk.auth.sendPaperEmailLoginOtp({
         email: formik.values.userEmail,
       });
@@ -102,12 +102,10 @@ const PaperWalletPage: NextPage = () => {
   const finishHeadlessOtpLogin = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    if (!paperWallet) return;
     setIsLoading(true);
     e.preventDefault();
     try {
-
-      // create instance of paper wallet
-      const paperWallet = createWalletInstance(paperConfig);
 
       // get paper sdk from paper wallet
       const sdk =  await paperWallet.getPaperSDK();
@@ -116,7 +114,7 @@ const PaperWalletPage: NextPage = () => {
         email: formik.values.userEmail || "",
         otp: otpCode || "",
       };
-      console.log(userObj.otp);
+      
       // connect paper wallet verification happens here and will throw error if issue
       await paperWallet.connect({ email: userObj.email, otp: userObj.otp });
 
@@ -129,17 +127,17 @@ const PaperWalletPage: NextPage = () => {
       });
 
       const user = await sdk.getUser();
-      console.log(user.status);
-      console.log(user);
+
       //const userPaperWallet = user.wallet;
       if (user.status === UserStatus.LOGGED_IN_WALLET_INITIALIZED) {
 
         // pass paper wallet
         const smartWallet = await connectToSmartWalletWithPaper(paperWallet);
+
         if (smartWallet !== null) {
           Swal.fire(
             "Smart Wallet Created!",
-            `Your address is: <b>${smartWallet.getAddress()}</b>`,
+            `Your address is: <b>${await smartWallet.getAddress()}</b>`,
             "success"
           );
         } else {
